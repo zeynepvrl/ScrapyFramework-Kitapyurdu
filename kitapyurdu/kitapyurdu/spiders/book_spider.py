@@ -25,5 +25,12 @@ class BooksSpider(scrapy.Spider):
             }
             i+=1
 
+        next_url=response.css("a.next::attr(href)").extract_first()
+        self.page_count+=1
+        if next_url is not None and self.page_count!=5:
+            yield scrapy.Request(url=next_url, callback=self.parse)
+        else:
+            pass
+
 
 
